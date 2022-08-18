@@ -26,8 +26,10 @@ public class GameScorer {
 
 		Frame frame = game.getFirstFrame();
 		while(!(frame instanceof FinalFrame)) {
-			FrameScore score = this.frameScorer.scoreCountingStrikesAndSpares(frame);
-		    gameScore.setTotal(gameScore.getTotal() + score.getTotal());
+			FrameScore frameScore = this.frameScorer.scoreCountingStrikesAndSpares(frame);
+			FrameScore score = this.frameScorer.score(frame);
+		    gameScore.setTotal(gameScore.getTotal() + frameScore.getTotal());
+		    gameScore.setFrameTotal(frameScore.canCount() ? frameScore.getTotal() : score.getTotal());
 			frame = frame.getNextFrame();
 		}
 

@@ -88,7 +88,6 @@ public class TestGames {
 			.addThrow(Throw.STRIKE)
 			.addThrow(Throw.STRIKE)
 			.addThrow(Throw.STRIKE)
-			.finish();		
+			.finish();
 	}
-
 }

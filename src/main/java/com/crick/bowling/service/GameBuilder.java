@@ -36,6 +36,10 @@ public class GameBuilder {
 		return this;
 	}
 	
+	public Game get() {
+		return this.currentGame;
+	}
+	
 	public Game finish() {
 		Game oldGame = this.currentGame;
 		this.reset();

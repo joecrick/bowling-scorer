@@ -23,16 +23,16 @@ public class FrameFinder {
 	public Frame findFrame(Game game, int frameNumber) {
 		Frame frame = game.getFirstFrame();
 		
-		if(frameNumber < 1) {
+		if(frameNumber <= 1) {
 			return frame;
 		}
 
-		int count = 1;
+		int count = 2;
 		while(frame.getNextFrame() != null) {
+			frame = frame.getNextFrame();
 			if(count == frameNumber) {
 				return frame;
 			}
-			frame = frame.getNextFrame();
 			count++;
 		}
 		return frame;
@@ -52,4 +52,17 @@ public class FrameFinder {
 		return (FinalFrame)frame;
 	}
 
+	public Frame findPreviousFrame(Game game, Frame searchFrame) {
+		Frame frame = game.getFirstFrame();
+
+		while(frame.getNextFrame() != null) {
+			if(frame.getNextFrame() == searchFrame) {
+				return frame;
+			}
+			frame = frame.getNextFrame();
+		}
+		
+		return null;
+	}
+	
 }

@@ -10,6 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.crick.bowling.model.Game;
 import com.crick.bowling.model.GameScore;
+import com.crick.bowling.model.Throw;
+import com.crick.bowling.service.GameBuilder;
+import com.crick.bowling.service.GameFactory;
 import com.crick.bowling.service.ScoreFactory;
 import com.crick.bowling.service.ThrowFinder;
 import com.crick.bowling.util.TestGames;
@@ -64,6 +67,17 @@ public class GameScorerTest {
 		GameScore score = this.gameScorer.score(game);
 		
 		assertThat(score.getTotal(), is(267));
+	}
+	
+	@Test
+	public void testIncompleteWithNoClosedFrame() {
+		Game game = new GameBuilder(new GameFactory())
+			.addThrow(Throw.STRIKE)
+			.addThrow(Throw.STRIKE)
+			.addThrow(Throw.NINE)
+			.addThrow(Throw.GUTTER)
+			.addThrow(Throw.STRIKE)
+			.get();
 	}
 
 }

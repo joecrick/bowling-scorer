@@ -2,6 +2,7 @@ package com.crick.bowling.scoring;
 
 import java.util.List;
 
+import com.crick.bowling.model.FinalFrame;
 import com.crick.bowling.model.Frame;
 import com.crick.bowling.model.FrameScore;
 import com.crick.bowling.model.Throw;
@@ -38,7 +39,11 @@ public class FrameScorer {
 		if(frame.getFirstThrow() == Throw.STRIKE) {
 			this.addStrike(frameScore, frame);
 		} else if(frame.getSecondThrow() == Throw.SPARE) {
-			frameScore.setTotal(frameScore.getTotal() + this.throwFinder.findNextThrow(frame).getScore());
+			Throw nextThrow = this.throwFinder.findNextThrow(frame);
+			frameScore.setTotal(frameScore.getTotal() + nextThrow.getScore());
+			frameScore.setCanCount(nextThrow != Throw.NOT_THROWN);
+		} else {
+			frameScore.setCanCount(frame.getSecondThrow() != Throw.NOT_THROWN);
 		}
 	}
 
@@ -46,10 +51,13 @@ public class FrameScorer {
 		List<Throw> nextThrows = this.throwFinder.findNextTwoThrows(frame);
 		if(nextThrows.get(1) == Throw.SPARE) {
 			frameScore.setTotal(frameScore.getTotal() + 10);
+			frameScore.setCanCount(true);
 		} else {
 			for(Throw t: nextThrows) {
 				frameScore.setTotal(frameScore.getTotal() + t.getScore());
 			}
+			frameScore.setCanCount(nextThrows.get(1) != Throw.NOT_THROWN);
 		}
 	}
+
 }
